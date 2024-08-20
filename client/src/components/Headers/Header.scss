@@ -1,0 +1,108 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 3rem;
+  border-bottom: 0.2rem solid #e0e0e0;
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.1rem;
+    cursor: pointer;
+
+    span {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #374151;
+
+      &:first-child {
+        color: #fff;
+        background: linear-gradient(to right, #7b77f7, #cc65b8);
+        padding: 0.6rem 0.8rem;
+        border-radius: 0.6rem;
+      }
+    }
+  }
+
+  .search--bar {
+    border: 0.1rem solid grey;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    cursor: text;
+
+    &:focus-within {
+      outline: 0.2rem solid teal;
+      border: none;
+    }
+
+    input {
+      outline: none;
+      border: none;
+      font-size: 1.6rem;
+      font-weight: 200;
+    }
+  }
+
+  .theme-signin-wrapper{
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: center;
+    color: #374151;
+    font-size: 1.6rem;
+    font-weight: 500;
+    order: 4;
+
+    .btn{
+      padding: 1rem 2rem;
+      cursor: pointer;
+      border: 0.1rem solid grey;
+    }
+
+    .theme-toggler-btn{
+      padding: 1rem 1.4rem;
+      background: #fff;
+      border-radius: 2rem;
+
+      &:hover{
+        background: #f0f0f0;
+        color: teal;
+      }
+    }
+
+    .signin-btn{
+      border: 0.2rem solid teal;
+      background: #fff;
+      font-size: 1.6rem;
+      font-weight: 600; 
+      border-radius: 1rem;
+
+      &:hover{
+        background: teal;
+        color: #fff;
+      }
+    }
+  }
+
+  .nav--links{
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    .nav--link{
+      color: #374151;
+      text-decoration: none;
+
+      &.active{
+        color: teal;
+      }
+    }
+  }
+}
+
