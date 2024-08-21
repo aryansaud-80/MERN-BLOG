@@ -1,0 +1,41 @@
+@import "../../styles/variable";
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 3rem;
+  gap: 1.5rem;
+  justify-content: center;
+  height: 40rem;
+
+  h1 {
+    font-size: 5rem;
+    font-weight: 700;
+    color: $text-color;
+  }
+
+  p {
+    font-size: 1.5rem;
+    color: #727986;
+  }
+
+  .allPost {
+    text-decoration: none;
+    color: $secondary-color;
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media screen and (max-width: 1025px) {
+  .hero {
+    h1 {
+      font-size: 3rem;
+    }
+  }
+}

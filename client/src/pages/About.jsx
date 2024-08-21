@@ -1,6 +1,6 @@
 const About = () => {
-  return (
-    <div>About</div>
-  )
-}
-export default About
+  return <section className="about">
+    About me
+  </section>;
+};
+export default About;
