@@ -33,8 +33,8 @@ const Headers = () => {
         <button className="theme-toggler-btn btn">
           <FaMoon />
         </button>
-        <Link to="/sign-in">
-          <button className="signin-btn btn">Sign In</button>
+        <Link to="/sign-up">
+          <button className="signin-btn btn">Sign Up</button>
         </Link>
 
         <div className="hamburger-menu" onClick={handleMenu}>
