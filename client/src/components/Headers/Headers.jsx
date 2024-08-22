@@ -4,19 +4,24 @@ import { FaMoon } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import { RiMenu2Line } from "react-icons/ri";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Headers = () => {
   const [menu, setMenu] = useState(false);
+
+  const { currentUser } = useSelector((state) => state.user);
 
   const handleMenu = () => {
     setMenu((prevMenu) => !prevMenu);
   };
   return (
     <section className="header">
-      <div className="logo">
-        <span>Aryan's</span>
-        <span>Blog</span>
-      </div>
+      <Link to="/" className="logo-link">
+        <div className="logo">
+          <span>Aryan's</span>
+          <span>Blog</span>
+        </div>
+      </Link>
 
       <div className="search--bar">
         <input type="text" placeholder="Search..." />
@@ -33,9 +38,16 @@ const Headers = () => {
         <button className="theme-toggler-btn btn">
           <FaMoon />
         </button>
-        <Link to="/sign-up">
-          <button className="signin-btn btn">Sign Up</button>
-        </Link>
+
+        {currentUser ? (
+          <div className="user--details">
+            <span>{currentUser.data.username}</span>
+          </div>
+        ) : (
+          <Link to="/sign-in">
+            <button className="signin-btn btn">Sign In</button>
+          </Link>
+        )}
 
         <div className="hamburger-menu" onClick={handleMenu}>
           <RiMenu2Line size="30px" />

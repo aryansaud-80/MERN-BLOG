@@ -1,20 +1,20 @@
 *,
 *::after,
-*::before{
+*::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
 }
 
-html{
+html {
   font-size: 10px;
 }
 
-body{
+body {
   height: 100svh;
   width: 100svw;
   overflow-x: hidden;
 }
 
-@import "./styles/signup";
+@import "./styles/auth";
