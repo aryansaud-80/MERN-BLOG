@@ -1,0 +1,132 @@
+@import "../../styles/variable";
+
+.footer {
+  padding: 4rem 6rem;
+  background-color: #fff;
+  width: 100vw-1.2vw;
+  position: relative;
+  border: 0.1rem solid $secondary-color;
+  border-radius: 1rem;
+  box-shadow: 0 0rem 0.5rem rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 1rem;
+    background: $secondary-color;
+    border-top-right-radius: 0.6rem;
+    border-top-left-radius: 0.6rem;
+  }
+
+  .footer--content {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.1rem solid $border-color;
+
+    .logo-link {
+      text-decoration: none;
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.1rem;
+        cursor: pointer;
+
+        span {
+          font-size: 3rem;
+          font-weight: 700;
+          color: $text-color;
+
+          &:first-child {
+            color: $text-color-secondary;
+            background: linear-gradient(to right, #7b77f7, #cc65b8);
+            padding: 0.4rem 2rem;
+            border-radius: 0.6rem;
+          }
+        }
+      }
+    }
+
+    .left {
+      display: flex;
+      gap: 3.4rem;
+      color: $text-color;
+      justify-content: center;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        align-items: center;
+
+        h1 {
+          font-size: 2rem;
+          font-weight: 700;
+        }
+
+        a {
+          text-decoration: none;
+          font-size: 1.6rem;
+          color: $text-color;
+          font-weight: 500;
+          transition: all 0.3s ease;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .footer--copyright {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+
+    p {
+      font-size: 1.6rem;
+      color: $text-color;
+    }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .footer {
+    padding: 2rem 3rem;
+
+    .footer--content {
+      flex-direction: column;
+      gap: 2rem;
+
+      .left {
+        justify-content: space-between;
+
+        div {
+          gap: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .footer {
+    .footer--content {
+      .left {
+        flex-direction: flex-start;
+      }
+    }
+
+    .footer--copyright {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+}

@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import Headers from "./components/Headers/Headers";
 import Search from "./pages/Search";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/search" element={<Search />} />
         <Route path="*" element={<h1>Page Not Found 404!</h1>} />
       </Routes>
+      <Footer />
     </Router>
   );
 };

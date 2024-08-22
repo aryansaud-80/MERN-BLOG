@@ -15,7 +15,7 @@ const Headers = () => {
     setMenu((prevMenu) => !prevMenu);
   };
   return (
-    <section className="header">
+    <header className="header">
       <Link to="/" className="logo-link">
         <div className="logo">
           <span>Aryan's</span>
@@ -65,7 +65,7 @@ const Headers = () => {
           Projects
         </NavLink>
       </div>
-    </section>
+    </header>
   );
 };
 export default Headers;
