@@ -5,6 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import { RiMenu2Line } from "react-icons/ri";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import User from "../User/User";
 
 const Headers = () => {
   const [menu, setMenu] = useState(false);
@@ -40,9 +41,7 @@ const Headers = () => {
         </button>
 
         {currentUser ? (
-          <div className="user--details">
-            <span>{currentUser.data.username}</span>
-          </div>
+          <User currentUser={currentUser}/>
         ) : (
           <Link to="/sign-in">
             <button className="signin-btn btn">Sign In</button>

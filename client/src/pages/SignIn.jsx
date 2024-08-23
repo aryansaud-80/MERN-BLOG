@@ -9,6 +9,7 @@ import {
   signInFailure,
 } from "../app/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import GoogleAuth from "../components/GoogleAuth/GoogleAuth";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -138,6 +139,8 @@ const SignIn = () => {
           <button type="submit" disabled={loading}>
             {loading ? "Loading..." : "Sign In"}
           </button>
+
+          <GoogleAuth />
 
           <p className="sign-inPath">
             Don't Have an account?

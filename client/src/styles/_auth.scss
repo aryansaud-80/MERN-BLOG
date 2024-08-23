@@ -2,11 +2,12 @@
 
 .auth {
   display: flex;
-  align-items: center;
+  // align-items: center;
   justify-content: center;
-  height: 100vh;
-  gap: 1.45rem;
+  min-height: 100vh;
+  gap: 4rem;
   background-color: #f5f5f5;
+  padding: 15rem 0rem;
 
   .right {
     width: 35%;
@@ -19,7 +20,7 @@
       display: flex;
       align-items: center;
       gap: 0.1rem;
-      cursor: pointer;
+      cursor: pointer;  
 
       span {
         font-size: 4rem;

@@ -1,0 +1,85 @@
+@import "../../styles/variable";
+
+.user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .user_logo {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 0.6rem rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+
+    img {
+      width: 100%;
+    }
+  }
+  .user-info {
+    display: none;
+    background: $background-color;
+    padding: 1rem 1.2rem;
+    border-radius: 0.3rem;
+    position: absolute;
+    top: 6rem;
+    right: -1.8rem;
+    z-index: 9999999;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      border-bottom: 0.1rem solid $border-color;
+      padding: 0.4rem 0;
+
+      .user_email {
+        font-weight: 600;
+      }
+
+      &:nth-child(2) {
+        gap: 0.8rem;
+        border-bottom: none;
+
+        hr {
+          width: 100%;
+        }
+
+        p {
+          cursor: pointer;
+          transition: all 0.3s ease;
+          width: 100%;
+          padding: 0.8rem 0.8rem;
+
+          &:hover {
+            background: rgb(232, 241, 245);
+          }
+        }
+
+        a {
+          @extend p;
+          text-decoration: none;
+          color: $text-color;
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  .user-info.active {
+    display: block;
+  }
+}
+
+
+@media screen and (max-width: 780px) {
+  .user {
+    .user-info {
+      right: -5rem;
+    }
+  }
+  
+}

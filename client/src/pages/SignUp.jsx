@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import GoogleAuth from "../components/GoogleAuth/GoogleAuth";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -140,8 +141,13 @@ const SignUp = () => {
             {loading ? "Loading..." : "Sign Up"}
           </button>
 
+          <GoogleAuth />
+
           <p className="sign-inPath">
-            Have an account? <Link className="link" to="/sign-in">Sign in</Link>
+            Have an account?{" "}
+            <Link className="link" to="/sign-in">
+              Sign in
+            </Link>
           </p>
         </form>
       </div>

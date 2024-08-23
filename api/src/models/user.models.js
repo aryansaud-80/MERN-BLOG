@@ -24,6 +24,11 @@ const userSchema = new Schema(
       required: true,
     },
 
+    avatar:{
+      type: String,
+      default: "https://www.vecteezy.com/free-vector/default-profile-picture"
+    },
+
     refreshToken:{
       type: String,
       default: "",
