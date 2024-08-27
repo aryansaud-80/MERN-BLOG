@@ -71,25 +71,31 @@ const SignIn = () => {
       });
 
       if (!res.ok) {
+        let errorMessage = "An error occurred";
         if (res.status === 400) {
-          throw new Error("All fields are required");
+          errorMessage = "All fields are required";
         } else if (res.status === 401) {
-          throw new Error("Invalid email or password");
+          errorMessage = "Invalid email or password";
+        } else {
+          errorMessage = `HTTP error! status: ${res.status}`;
         }
-        throw new Error(`HTTP error! status: ${res.status}`);
+
+        dispatch(signInFailure(errorMessage));
+        notify(errorMessage, "error");
+        return;
       }
 
       const data = await res.json();
+      console.log(data);
 
-      if (data.success === false) {
+      if (!res.ok) {
         dispatch(signInFailure(data.message));
         notify(data.message, "error");
+      } else {
+        dispatch(signInSuccess(data));
+        // notify("SignIn Success", "success");
+        navigate("/");
       }
-      console.log("SignUp Success", data);
-
-      dispatch(signInSuccess(data));
-      // notify("SignIn Success", "success");
-      navigate("/");
     } catch (error) {
       dispatch(signInFailure(error.message));
       notify(error.message, "error");

@@ -1,0 +1,68 @@
+@import "../../styles/variable";
+
+@mixin sideBarNav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.side--bar {
+  height: 100vh;
+  min-width: 20rem;
+  background: #F9FAFB;
+  display: flex;
+  flex-direction: column;
+  gap: 2.3rem;
+  padding: 1.4rem 1.6rem;
+  box-shadow: 0 0 1rem rgba($border-color, 0.1);
+  font-size: 1.6rem;
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.8rem 1.4rem;
+
+    &:hover {
+      background: #F3F4F6;
+      border-radius: 0.4rem;
+    }
+
+    p {
+      @include sideBarNav;
+    }
+
+    span {
+      background-color: #4B5563;
+      padding: 0.2rem 0.7rem;
+      color: white;
+      border-radius: 0.4rem;
+      font-weight: 500;
+    }
+  }
+
+  .profile.active{
+    background: #F3F4F6;
+    border-radius: 0.4rem;
+  }
+
+  .sign-out {
+    @include sideBarNav;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.8rem 1.4rem;
+
+    &:hover {
+      background: #F3F4F6;
+      border-radius: 0.4rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  .side--bar{
+    height: fit-content;
+  }
+}

@@ -24,15 +24,15 @@ const userSchema = new Schema(
       required: true,
     },
 
-    avatar:{
+    avatar: {
       type: String,
-      default: "https://www.vecteezy.com/free-vector/default-profile-picture"
+      default: "https://www.w3schools.com/howto/img_avatar.png",
     },
 
-    refreshToken:{
+    refreshToken: {
       type: String,
       default: "",
-    }
+    },
   },
   { timestamps: true }
 );

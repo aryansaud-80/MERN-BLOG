@@ -92,8 +92,6 @@ export const signin = asyncHandler(async (req, res) => {
 export const googleAuth = asyncHandler(async (req, res) => {
   const { name, email, photoUrl } = req.body;
 
-
-
   const user = await User.findOne({ email });
   if (user) {
     const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
@@ -143,4 +141,47 @@ export const googleAuth = asyncHandler(async (req, res) => {
   }
 
   throw new ApiError(500, "Error signing in with Google");
+});
+
+export const updateUser = asyncHandler(async (req, res) => {
+  const id = req.params.userId;
+
+  if (id !== req.user._id) {
+    throw new ApiError(403, "You are not authorized to perform this action");
+  }
+
+  const { username, email, password, avatar } = req.body;
+
+  const inValid = [username, email, password, avatar].every(
+    (field) => field === ""
+  );
+
+  if (inValid) {
+    throw new ApiError(400, "At least one field is required");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        username: username?.trim().toLowerCase(),
+        email,
+        password,
+        avatar,
+      },
+    },
+    { new: true }
+  );
+
+  if (!user) {
+    throw new ApiError(500, "Error updating user");
+  }
+
+
+
+  const userData = await User.findById(user._id).select("-password");
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "User updated successfully", userData));
 });

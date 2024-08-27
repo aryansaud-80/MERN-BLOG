@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Headers from "./components/Headers/Headers";
 import Search from "./pages/Search";
 import Footer from "./components/Footer/Footer";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 const App = () => {
   return (
@@ -18,7 +19,9 @@ const App = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
         <Route path="/about" element={<About />} />
         <Route path="/search" element={<Search />} />
         <Route path="*" element={<h1>Page Not Found 404!</h1>} />

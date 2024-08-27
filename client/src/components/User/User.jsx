@@ -36,7 +36,7 @@ const User = ({ currentUser }) => {
         </div>
 
         <div>
-          <Link to="/dashboard?tab='profile'">
+          <Link to="/dashboard?tab=profile">
             <p>Profile</p>
           </Link>
           <hr />

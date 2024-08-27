@@ -1,6 +1,12 @@
+import DashboardSideBar from "../components/DashboardSideBar/DashboardSideBar";
+import DashboardProfile from "../components/DashboardProfile/DashboardProfile";
+
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
-export default Dashboard
+    <section className="dashboard">
+      <DashboardSideBar />
+      <DashboardProfile />
+    </section>
+  );
+};
+export default Dashboard;
