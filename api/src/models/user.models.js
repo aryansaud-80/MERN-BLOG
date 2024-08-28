@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
-import bcrypt from "bcrypt";
+import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
+import { FaUsersCog } from "react-icons/fa";
 
 const userSchema = new Schema(
   {
@@ -40,6 +41,17 @@ const userSchema = new Schema(
 userSchema.pre("save", function () {
   if (!this.isModified("password")) return null;
   this.password = bcrypt.hashSync(this.password, 10);
+});
+
+userSchema.pre("findOneAndUpdate", function (next) {
+  const update = this.getUpdate();
+
+  if (update.$set.password) {
+    const hashedPassword = bcrypt.hashSync(update.$set.password, 10);
+    this.setUpdate({ ...update, password: hashedPassword });
+  }
+
+  next();
 });
 
 userSchema.methods.comparePassword = function (password) {

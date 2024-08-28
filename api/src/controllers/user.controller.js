@@ -105,7 +105,7 @@ export const googleAuth = asyncHandler(async (req, res) => {
       secure: false,
     };
 
-    res
+    return res
       .status(200)
       .cookie("refreshToken", refreshToken, options)
       .cookie("accessToken", accessToken, options)
@@ -133,7 +133,7 @@ export const googleAuth = asyncHandler(async (req, res) => {
       secure: false,
     };
 
-    res
+    return res
       .status(200)
       .cookie("refreshToken", refreshToken, options)
       .cookie("accessToken", accessToken, options)
@@ -160,8 +160,8 @@ export const updateUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "At least one field is required");
   }
 
-  const user = await User.findByIdAndUpdate(
-    id,
+  const user = await User.findOneAndUpdate(
+    { _id: id },
     {
       $set: {
         username: username?.trim().toLowerCase(),
@@ -169,19 +169,57 @@ export const updateUser = asyncHandler(async (req, res) => {
         password,
         avatar,
       },
-    },
-    { new: true }
+    }
   );
 
   if (!user) {
     throw new ApiError(500, "Error updating user");
   }
 
-
-
   const userData = await User.findById(user._id).select("-password");
+
+  const options = {
+    httpOnly: true,
+    secure: false,
+  };
 
   return res
     .status(200)
     .json(new ApiResponse(200, "User updated successfully", userData));
+});
+
+export const deleteUser = asyncHandler(async (req, res) => {
+  const id = req.params.userId;
+
+  if (id !== req.user._id) {
+    throw new ApiError(403, "You are not authorized to perform this action");
+  }
+
+  const user = await User.findByIdAndDelete(id);
+
+  if (!user) {
+    throw new ApiError(500, "Error deleting user");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "User deleted successfully", null));
+});
+
+export const signOutUser = asyncHandler(async (req, res) => { 
+  const id = req.user._id;
+
+  if (id !== req.params.userId) {
+    throw new ApiError(403, "You are not authorized to perform this action");
+  }
+
+  const options = {
+    httpOnly: true,
+    secure: false,
+  };
+
+  return res
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .json(new ApiResponse(200, "User signed out successfully", null));
 });

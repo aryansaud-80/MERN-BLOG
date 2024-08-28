@@ -10,6 +10,10 @@ import {
   updateStart,
   updateSuccess,
   updateFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  signOutUserStart,
+  signOutUserSuccess,
 } from "../../app/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { app } from "../../assets/firebase.config";
@@ -17,6 +21,8 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Flip, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FiAlertCircle } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const DashboardProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -27,10 +33,17 @@ const DashboardProfile = () => {
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
   const [imageUploading, setImageUploading] = useState(false);
   const [imageUploadError, setImageUploadError] = useState(null);
+  const [popUp, setPopUp] = useState(false);
 
   const inputFileRef = useRef(null);
 
   const [formData, setFormData] = useState({});
+
+  const navigate = useNavigate();
+
+  const handlePopUp = () => {
+    setPopUp((prev) => !prev);
+  };
 
   const notify = (message, type) => {
     toast(message, {
@@ -147,83 +160,148 @@ const DashboardProfile = () => {
     );
   };
 
+  const handleDeleteAccount = async () => {
+    dispatch(deleteUserStart());
+    try {
+      const res = await fetch(`api/auth/delete/${currentUser.data._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        notify(data.message, "error");
+      } else {
+        dispatch(deleteUserSuccess());
+        notify(data.message, "success");
+        navigate("/");
+      }
+    } catch (error) {
+      notify(error.message, "error");
+    }
+  };
+
+  const handleSignOut = async () => {
+    dispatch(signOutUserStart());
+    try {
+      const res = await fetch(`api/auth/sign-out/${currentUser.data._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = res.json();
+
+      if (!res.ok) {
+        notify(data.message, "error");
+      } else {
+        dispatch(signOutUserSuccess());
+        notify(data.message, "success");
+        navigate("/sign-in");
+      }
+    } catch (error) {
+      notify(error.message, "error");
+    }
+  };
+
   return (
-    <div className="user--profile">
-      <h1>Profile</h1>
-
-      {activeTab === "profile" && (
-        <form className="updateForm" onSubmit={handleSubmit}>
-          <div className="user-profile__avatar" onClick={handleImageLoad}>
-            <img src={imageFileUrl || currentUser.data.avatar} alt="profile" />
-
-            {imageUploading && (
-              <CircularProgressbar
-                value={imageUploadProgress || 0}
-                text={`${imageUploadProgress}%`}
-                strokeWidth={5}
-                styles={{
-                  root: {
-                    width: "13rem",
-                    height: "13rem",
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    transform: "translate(-0.5rem, -0.5rem)",
-                  },
-                  path: {
-                    stroke: `rgba(62, 152, 199, ${imageUploadProgress / 100})`,
-                  },
-                }}
+    <>
+      <div className="user--profile">
+        <h1>Profile</h1>
+        {activeTab === "profile" && (
+          <form className="updateForm" onSubmit={handleSubmit}>
+            <div className="user-profile__avatar" onClick={handleImageLoad}>
+              <img
+                src={imageFileUrl || currentUser.data.avatar}
+                alt="profile"
               />
-            )}
+
+              {imageUploading && (
+                <CircularProgressbar
+                  value={imageUploadProgress || 0}
+                  text={`${imageUploadProgress}%`}
+                  strokeWidth={5}
+                  styles={{
+                    root: {
+                      width: "13rem",
+                      height: "13rem",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      transform: "translate(-0.5rem, -0.5rem)",
+                    },
+                    path: {
+                      stroke: `rgba(62, 152, 199, ${imageUploadProgress / 100})`,
+                    },
+                  }}
+                />
+              )}
+            </div>
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              ref={inputFileRef}
+              style={{ display: "none" }}
+            />
+
+            <input
+              type="text"
+              name="username"
+              defaultValue={currentUser.data.username}
+              onChange={handleChange}
+              placeholder="Username"
+            />
+            <input
+              type="email"
+              name="email"
+              defaultValue={currentUser.data.email}
+              onChange={handleChange}
+              placeholder="Email"
+            />
+            <input
+              type="password"
+              name="password"
+              defaultValue={""}
+              onChange={handleChange}
+              placeholder="Password"
+            />
+
+            <button type="submit" disabled={imageUploading}>
+              Update
+            </button>
+          </form>
+        )}
+        <div className="user--controls">
+          <button onClick={handlePopUp}>Delete Account</button>
+          <button onClick={handleSignOut}>Sign Out</button>
+        </div>
+
+        {popUp && (
+          <div className="popup">
+            <FiAlertCircle size="50px" color="lightgrey" />
+            <h2>Are you sure you want to delete your account?</h2>
+            <div>
+              <button onClick={handleDeleteAccount}>Yes, I'm sure</button>
+              <button onClick={handlePopUp}>No, cancel</button>
+            </div>
           </div>
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            ref={inputFileRef}
-            style={{ display: "none" }}
-          />
-
-          <input
-            type="text"
-            name="username"
-            defaultValue={currentUser.data.username}
-            onChange={handleChange}
-            placeholder="Username"
-          />
-          <input
-            type="email"
-            name="email"
-            defaultValue={currentUser.data.email}
-            onChange={handleChange}
-            placeholder="Email"
-          />
-          <input
-            type="password"
-            name="password"
-            defaultValue={""}
-            onChange={handleChange}
-            placeholder="Password"
-          />
-
-          <button type="submit" disabled={imageUploading}>
-            Update
-          </button>
-        </form>
-      )}
-
-      <ToastContainer
-        style={{
-          fontSize: "1.5rem",
-          fontWeight: "bold",
-          color: "black",
-        }}
-      />
-
-      {imageUploadError && ""}
-    </div>
+        )}
+        <ToastContainer
+          style={{
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            color: "black",
+          }}
+        />
+        {imageUploadError && ""}
+      </div>
+    </>
   );
 };
 

@@ -41,7 +41,7 @@ const Headers = () => {
         </button>
 
         {currentUser ? (
-          <User currentUser={currentUser}/>
+          <User currentUser={currentUser} />
         ) : (
           <Link to="/sign-in">
             <button className="signin-btn btn">Sign In</button>
